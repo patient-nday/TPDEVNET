@@ -1,0 +1,20 @@
+# RAPPORT FINAL D'AUTOMATISATION RESEAU
+
+**Projet :** Automatisation Infrastructure Multiservices  
+**Outil :** Ansible
+
+---
+
+## Etat des equipements
+
+| Equipement | Banniere MOTD | Audit SNMP |
+|---|---|---|
+{% for equipement in groups['all'] %}
+| {{ equipement }} | {% if hostvars[equipement].banner_updated | default(false) %}REUSSI{% else %}NON CONFIRME{% endif %} | {% if hostvars[equipement].snmp_compliant | default(false) %}CONFORME{% else %}NON CONFORME / NON CONFIRME{% endif %} |
+{% endfor %}
+
+---
+
+## Conclusion
+
+Rapport genere automatiquement par Ansible.

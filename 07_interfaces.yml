@@ -1,0 +1,20 @@
+
+---
+- name: Inventaire et verification des interfaces reseau
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: Collecter les informations des interfaces
+      cisco.ios.ios_facts:
+        gather_subset:
+          - interfaces
+
+    - name: Afficher les interfaces configurees dans host_vars
+      debug:
+        var: interfaces
+
+    - name: Afficher les interfaces detectees sur le routeur
+      debug:
+        var: ansible_net_interfaces

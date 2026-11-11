@@ -1,0 +1,18 @@
+RAPPORT DES EQUIPEMENTS RESEAU
+==============================
+
+Equipement : FAI
+Version IOS : 15.5(3)M
+Numero de serie : 9J9K4KN346Y3E2XFVOL7G
+Modele : IOSv
+-----------------------------------
+Equipement : SPINE1
+Version IOS : 15.2(CML_NIGHTLY_20180510)FLO_DSGS7
+Numero de serie : 93UKQXDMDFZ
+Modele : IOSv
+-----------------------------------
+Equipement : LEAF_1
+Version IOS : 15.2(CML_NIGHTLY_20180510)FLO_DSGS7
+Numero de serie : 9NIDRHXCY5W
+Modele : IOSv
+-----------------------------------

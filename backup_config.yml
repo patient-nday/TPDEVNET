@@ -1,0 +1,27 @@
+
+---
+- name: Sauvegarde des configurations Cisco
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Récupérer la running-config
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+      register: configuration
+
+    - name: Créer le dossier de sauvegarde
+      ansible.builtin.file:
+        path: "./backups/{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: true
+      register: dossier_backup
+
+    - name: Sauvegarder la configuration localement
+      ansible.builtin.copy:
+        content: "{{ configuration.stdout[0] }}"
+        dest: "{{ dossier_backup.path }}/{{ inventory_hostname }}_running-config.txt"
+      delegate_to: localhost

@@ -1,0 +1,4 @@
+---
+- import_playbook: 08_motd.yml
+- import_playbook: 09_audit_snmp.yml
+- import_playbook: 10_rapport.yml

@@ -1,0 +1,14 @@
+
+---
+- name: test de la connectivité
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: test de la connectivité
+      cisco.ios.ios_ping:
+        dest: "{{ item }}"
+      loop:
+        - 192.168.99.1
+        - 192.168.87.132
+        - 10.0.2.1

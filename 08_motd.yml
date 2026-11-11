@@ -1,0 +1,17 @@
+
+---
+- name: Deploiement des bannieres MOTD
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: Configurer la banniere de connexion
+      cisco.ios.ios_banner:
+        banner: motd
+        text: "{{ lookup('template', 'templates/motd.j2') }}"
+        state: present
+
+    - name: Enregistrer la reussite du deploiement
+      ansible.builtin.set_fact:
+        banner_updated: true

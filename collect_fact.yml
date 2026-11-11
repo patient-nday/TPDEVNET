@@ -1,0 +1,40 @@
+
+---
+- name: Collecte des informations des équipements Cisco
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Récupérer les facts des équipements
+      cisco.ios.ios_facts:
+        gather_subset:
+          - hardware
+          - default
+
+    - name: Afficher les informations récupérées
+      ansible.builtin.debug:
+        msg:
+          - "Equipement : {{ ansible_net_hostname }}"
+          - "Version IOS : {{ ansible_net_version }}"
+          - "Numero de serie : {{ ansible_net_serialnum }}"
+          - "Modele : {{ ansible_net_model }}"
+
+- name: Enregistrer les informations localement
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Créer le fichier contenant les facts
+      ansible.builtin.copy:
+        dest: "./informations_reseau.txt"
+        content: |
+          RAPPORT DES EQUIPEMENTS RESEAU
+          ==============================
+
+          {% for equipement in groups['all'] %}
+          Equipement : {{ hostvars[equipement].ansible_net_hostname }}
+          Version IOS : {{ hostvars[equipement].ansible_net_version }}
+          Numero de serie : {{ hostvars[equipement].ansible_net_serialnum }}
+          Modele : {{ hostvars[equipement].ansible_net_model }}
+          -----------------------------------
+          {% endfor %}

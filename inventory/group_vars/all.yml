@@ -1,0 +1,27 @@
+---
+# Paramètres de connexion
+ansible_connection: ansible.netcommon.network_cli
+ansible_network_os: cisco.ios.ios
+ansible_become: yes
+ansible_become_method: enable
+admin_user: netadmin
+# VLAN du TP
+vlans:
+  - vlan_id: 10
+    name: ADMIN
+  - vlan_id: 20
+    name: SERVEURS
+  - vlan_id: 30
+    name: UTILISATEURS
+  - vlan_id: 99
+    name: MANAGEMENT
+# Bannière de connexion
+company_name: "MON ENTREPRISE"
+welcome_message: "Bienvenue dans notre infrastructure reseau."
+
+# Paramètres SSH
+ansible_ssh_common_args: '-o KexAlgorithms=+diffie-hellman-group14-sha1 -o HostKeyAlgorithms=+ssh-rsa'
+
+# Serveur NTP
+ntp_servers:
+  - 192.168.87.131

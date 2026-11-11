@@ -1,0 +1,26 @@
+
+---
+- name: Audit de conformite SNMP
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: Verifier la configuration SNMP
+      cisco.ios.ios_command:
+        commands:
+          - show running-config | include snmp-server
+      register: snmp_config
+
+    - name: Signaler une configuration SNMP absente
+      ansible.builtin.fail:
+        msg: "NON CONFORME : SNMP n'est pas configure sur {{ inventory_hostname }}."
+      when: snmp_config.stdout[0] | trim == ""
+
+    - name: Enregistrer la conformite SNMP
+      ansible.builtin.set_fact:
+        snmp_compliant: true
+
+    - name: Confirmer la conformite SNMP
+      ansible.builtin.debug:
+        msg: "CONFORME : SNMP est configure sur {{ inventory_hostname }}."

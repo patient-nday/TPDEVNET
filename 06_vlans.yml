@@ -1,0 +1,15 @@
+
+---
+- name: Deploiement et mise en conformite des VLAN
+  hosts: SWITCH
+  gather_facts: false
+
+  tasks:
+
+    - name: Creer ou mettre a jour les VLAN
+      cisco.ios.ios_vlans:
+        config:
+          - vlan_id: "{{ item.vlan_id }}"
+            name: "{{ item.name }}"
+        state: merged
+      loop: "{{ vlans }}"

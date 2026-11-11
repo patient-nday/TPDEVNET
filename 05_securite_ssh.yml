@@ -1,0 +1,30 @@
+
+---
+- name: Securisation des acces utilisateurs et SSH
+  hosts: all
+  gather_facts: false
+
+  vars_files:
+    - inventory/group_vars/vault.yml
+
+  tasks:
+
+    - name: Creer un utilisateur administrateur local
+      cisco.ios.ios_config:
+        lines:
+          - "username {{ admin_user }} privilege 15 secret {{ admin_password }}"
+      no_log: true
+
+    - name: Activer SSH version 2
+      cisco.ios.ios_config:
+        lines:
+          - ip ssh version 2
+
+    - name: Securiser les lignes VTY
+      cisco.ios.ios_config:
+        parents:
+          - line vty 0 4
+        lines:
+          - login local
+          - transport input ssh
+          - exec-timeout 10 0
